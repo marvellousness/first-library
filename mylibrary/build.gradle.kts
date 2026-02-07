@@ -3,11 +3,14 @@ plugins {
     id("maven-publish")
 }
 
+val libraryVersion = "1.0.0"
+val groupId = "nova.publish"
+val artifactId = "mylibrary"
+val githubRepo = "marvellousness/first-library"
+
 android {
     namespace = "nova.publish.mylibrary"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 35
@@ -29,17 +32,29 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    publishing {
+        singleVariant("release")
+    }
 }
 
-publishing {
-    publications {
-        release(MavenPublication::class) {
-            groupId = "com.github.marvellousness"
-            artifactId = "first-library"
-            version = "v1.0.2"
-
-            afterEvaluate {
-                from(components.getByName("release"))
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = groupId
+                artifactId = artifactId
+                version = libraryVersion
+                from(components["release"])
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                uri("https://maven.pkg.github.com/$githubRepo")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
     }

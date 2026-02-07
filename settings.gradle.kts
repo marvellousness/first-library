@@ -23,3 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Publish Demo Library"
 include(":app")
+include(":mylibrary")
