@@ -31,14 +31,15 @@ android {
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication::class) {
+publishing {
+    publications {
+        release(MavenPublication::class) {
+            groupId = "com.github.marvellousness"
+            artifactId = "first-library"
+            version = "v1.0.2"
+
+            afterEvaluate {
                 from(components.getByName("release"))
-                groupId = "com.github.marvellousness"
-                artifactId = "first-library"
-                version = "v1.0.1"
             }
         }
     }
