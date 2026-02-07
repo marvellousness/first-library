@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    id("maven-publish")
 }
 
 android {
@@ -27,6 +28,19 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication::class) {
+                from(components.getByName("release"))
+                groupId = "com.github.marvellousness"
+                artifactId = "first-library"
+                version = "v1.0.1"
+            }
+        }
     }
 }
 
