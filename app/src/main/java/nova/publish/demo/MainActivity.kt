@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import nova.publish.demo.ui.theme.PublishDemoLibraryTheme
-import nova.publish.mylibrary.SampleDemo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +32,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val myName = SampleDemo.callMe()
     Text(
-        text = "Hello ${myName}!",
+        text = "Hello ${name}!",
         modifier = modifier
     )
 }
